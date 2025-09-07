@@ -1,0 +1,270 @@
+# Eva AI Agent Function Registry
+# This file defines all capabilities available to Eva across integrated systems
+# Each function represents an action Eva can perform through voice commands
+
+version: "1.0"
+registry_name: "eva_core_functions"
+last_updated: "2025-09-06"
+
+# Authentication configurations for different services
+auth_configs:
+  google_workspace:
+    type: "oauth2"
+    scopes:
+      - "https://www.googleapis.com/auth/gmail.modify"
+      - "https://www.googleapis.com/auth/calendar"
+      - "https://www.googleapis.com/auth/drive"
+      - "https://www.googleapis.com/auth/documents"
+      - "https://www.googleapis.com/auth/spreadsheets"
+    credentials_path: "./credentials/google_oauth.json"
+    token_storage: "./credentials/google_tokens.json"
+
+# Core function definitions
+functions:
+  
+  # ===== EMAIL FUNCTIONS =====
+  gmail_send:
+    category: "email"
+    description: "Send an email through Gmail"
+    parameters:
+      - name: "to"
+        type: "string"
+        required: true
+        description: "Recipient email address"
+      - name: "subject"
+        type: "string"
+        required: true
+        description: "Email subject line"
+      - name: "body"
+        type: "string"
+        required: true
+        description: "Email body content"
+      - name: "cc"
+        type: "array"
+        required: false
+        description: "CC recipients (optional)"
+      - name: "attachments"
+        type: "array"
+        required: false
+        description: "File paths for attachments (optional)"
+    auth_required: "google_workspace"
+    rate_limit: "10/minute"
+    execution_time: "2-5 seconds"
+    example_usage: "Send an email to john@example.com about the meeting"
+
+  gmail_read_recent:
+    category: "email"
+    description: "Read recent emails from Gmail inbox"
+    parameters:
+      - name: "count"
+        type: "integer"
+        required: false
+        default: 10
+        description: "Number of emails to retrieve (max 50)"
+      - name: "unread_only"
+        type: "boolean"
+        required: false
+        default: false
+        description: "Only return unread emails"
+    auth_required: "google_workspace"
+    rate_limit: "30/minute"
+    cache_duration: "2 minutes"
+    execution_time: "1-3 seconds"
+    example_usage: "Show me my recent emails"
+
+  gmail_search:
+    category: "email"
+    description: "Search Gmail inbox with query"
+    parameters:
+      - name: "query"
+        type: "string"
+        required: true
+        description: "Gmail search query (supports Gmail search syntax)"
+      - name: "max_results"
+        type: "integer"
+        required: false
+        default: 20
+        description: "Maximum number of results to return"
+    auth_required: "google_workspace"
+    rate_limit: "20/minute"
+    execution_time: "2-4 seconds"
+    example_usage: "Search for emails from my manager about the project"
+
+  # ===== CALENDAR FUNCTIONS =====
+  calendar_today:
+    category: "calendar"
+    description: "Get today's calendar events"
+    parameters: []
+    auth_required: "google_workspace"
+    rate_limit: "60/minute"
+    cache_duration: "5 minutes"
+    execution_time: "1-2 seconds"
+    example_usage: "What's on my calendar today?"
+
+  calendar_create_event:
+    category: "calendar"
+    description: "Create a new calendar event"
+    parameters:
+      - name: "title"
+        type: "string"
+        required: true
+        description: "Event title"
+      - name: "start_time"
+        type: "datetime"
+        required: true
+        description: "Event start time (ISO format)"
+      - name: "end_time"
+        type: "datetime"
+        required: true
+        description: "Event end time (ISO format)"
+      - name: "description"
+        type: "string"
+        required: false
+        description: "Event description"
+      - name: "attendees"
+        type: "array"
+        required: false
+        description: "List of attendee email addresses"
+      - name: "location"
+        type: "string"
+        required: false
+        description: "Event location"
+    auth_required: "google_workspace"
+    rate_limit: "20/minute"
+    execution_time: "2-4 seconds"
+    example_usage: "Schedule a meeting with John tomorrow at 2 PM"
+
+  calendar_find_free_time:
+    category: "calendar"
+    description: "Find free time slots in calendar"
+    parameters:
+      - name: "duration_minutes"
+        type: "integer"
+        required: true
+        description: "Required meeting duration in minutes"
+      - name: "start_date"
+        type: "date"
+        required: false
+        default: "today"
+        description: "Start date for search"
+      - name: "end_date"
+        type: "date"
+        required: false
+        default: "+7 days"
+        description: "End date for search"
+      - name: "preferred_times"
+        type: "array"
+        required: false
+        description: "Preferred time ranges (e.g., ['9:00-12:00', '14:00-17:00'])"
+    auth_required: "google_workspace"
+    rate_limit: "30/minute"
+    execution_time: "3-6 seconds"
+    example_usage: "Find a 1-hour free slot this week for a team meeting"
+
+  # ===== GOOGLE DRIVE FUNCTIONS =====
+  drive_search:
+    category: "files"
+    description: "Search Google Drive for files and folders"
+    parameters:
+      - name: "query"
+        type: "string"
+        required: true
+        description: "Search query for file names or content"
+      - name: "file_type"
+        type: "string"
+        required: false
+        description: "Filter by file type (docs, sheets, slides, pdf, etc.)"
+      - name: "max_results"
+        type: "integer"
+        required: false
+        default: 20
+        description: "Maximum number of results"
+    auth_required: "google_workspace"
+    rate_limit: "40/minute"
+    execution_time: "2-5 seconds"
+    example_usage: "Find my presentation about quarterly results"
+
+  drive_read_document:
+    category: "files"
+    description: "Read content from a Google Doc"
+    parameters:
+      - name: "document_id"
+        type: "string"
+        required: true
+        description: "Google Doc ID or URL"
+    auth_required: "google_workspace"
+    rate_limit: "30/minute"
+    execution_time: "2-4 seconds"
+    example_usage: "Read the content of my project planning document"
+
+  # ===== UTILITY FUNCTIONS =====
+  weather_current:
+    category: "utility"
+    description: "Get current weather information"
+    parameters:
+      - name: "location"
+        type: "string"
+        required: false
+        default: "current_location"
+        description: "Location for weather (defaults to user's location)"
+    auth_required: false
+    rate_limit: "30/minute"
+    cache_duration: "10 minutes"
+    execution_time: "1-3 seconds"
+    example_usage: "What's the weather like today?"
+
+  calculate:
+    category: "utility"
+    description: "Perform mathematical calculations"
+    parameters:
+      - name: "expression"
+        type: "string"
+        required: true
+        description: "Mathematical expression to evaluate"
+    auth_required: false
+    rate_limit: "100/minute"
+    execution_time: "< 1 second"
+    example_usage: "Calculate 15% tip on $47.50"
+
+# Function categories for organization
+categories:
+  email:
+    description: "Email management and communication"
+    icon: "📧"
+    functions: ["gmail_send", "gmail_read_recent", "gmail_search"]
+  
+  calendar:
+    description: "Calendar and scheduling management"
+    icon: "📅"
+    functions: ["calendar_today", "calendar_create_event", "calendar_find_free_time"]
+  
+  files:
+    description: "File and document management"
+    icon: "📁"
+    functions: ["drive_search", "drive_read_document"]
+  
+  utility:
+    description: "General utility functions"
+    icon: "🔧"
+    functions: ["weather_current", "calculate"]
+
+# System configuration
+system:
+  max_concurrent_functions: 3
+  default_timeout: 30
+  retry_attempts: 2
+  error_handling:
+    log_level: "INFO"
+    user_friendly_errors: true
+    fallback_responses: true
+
+# Response format template for Claude Code
+response_format:
+  plan: "High-level description of what will be executed"
+  actions:
+    - function: "function_name"
+      parameters: {}
+      reason: "Why this action is being taken"
+  response: "Natural language response to user"
+  confidence: 0.95
+  estimated_time: "2-5 seconds"
