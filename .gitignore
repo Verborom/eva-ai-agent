@@ -1,0 +1,171 @@
+# Eva AI Agent System - Environment Variables and Secrets
+# DO NOT COMMIT THESE FILES TO VERSION CONTROL
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# API Keys and Credentials
+Configuration/auth-config.json
+Configuration/google-credentials.json
+Configuration/elevenlabs-api-key.txt
+Configuration/.credentials/
+Configuration/secrets/
+
+# OAuth Tokens and Session Data
+Configuration/oauth-tokens.json
+Configuration/session-storage.json
+
+# Local Development
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.npm
+.yarn-integrity
+
+# React Native
+Mobile-App/node_modules/
+Mobile-App/.expo/
+Mobile-App/dist/
+Mobile-App/.expo-shared/
+Mobile-App/*.orig.*
+Mobile-App/web-build/
+Mobile-App/ios/
+Mobile-App/android/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+Execution-Bridge/venv/
+Execution-Bridge/.venv
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Testing
+coverage/
+*.cover
+*.py,cover
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Logs
+*.log
+logs/
+Local-Server/logs/
+Execution-Bridge/logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Database files
+*.db
+*.sqlite
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Development tools
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Editor directories and files
+.vscode/
+.sublime-*
+*.sublime-project
+*.sublime-workspace
+
+# Local server runtime
+Local-Server/sessions/
+Local-Server/uploads/
+
+# Claude Code CLI cache
+.claude/
+claude-cache/
+
+# Monday.com credentials (if locally stored)
+Configuration/monday-credentials.json
+
+# Google Drive API cache
+drive-cache/
+.google-drive-cache/
+
+# ElevenLabs audio cache
+audio-cache/
+.elevenlabs-cache/
+
+# Development database and state
+dev-state.json
+development.db
+
+# Exclude Continuity folder from main repo (it's local state)
+# Continuity/
+# Note: We might want to include some continuity files but exclude others
+Continuity/progress.json
+Continuity/local-state.json
