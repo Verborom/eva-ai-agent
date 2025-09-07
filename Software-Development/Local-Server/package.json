@@ -1,0 +1,41 @@
+{
+  "name": "eva-local-server",
+  "version": "1.0.0",
+  "description": "Local server for EVA AI Agent System - handles communication between mobile app and Claude Code",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "keywords": [
+    "eva",
+    "ai-agent",
+    "local-server",
+    "websocket",
+    "claude-code"
+  ],
+  "author": "Joe @ Eat at Joes",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.17.0",
+    "cors": "^2.8.5",
+    "winston": "^3.13.0",
+    "dotenv": "^16.4.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.2.0",
+    "joi": "^17.13.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
